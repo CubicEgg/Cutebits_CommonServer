@@ -1,0 +1,12 @@
+const MPOINT_DOMAIN_DEV = "https://dev.mexchange.vn";
+const MPOINT_DOMAIN_PRO = "https://app.mexchange.vn";
+
+const MPOINT_APP_ID_DEV = "";
+const MPOINT_APP_ID_PRO = "";
+
+const MPOINT_APP_SECRET_DEV = "";
+const MPOINT_APP_SECRET_PRO = "";
+
+//export const MPOINT_APP_ID      = IS_PRODUCTION_SERVER ? MPOINT_APP_ID_PRO : MPOINT_APP_ID_DEV;
+//export const MPOINT_APP_SECRET  = IS_PRODUCTION_SERVER ? MPOINT_APP_SECRET_PRO : MPOINT_APP_SECRET_DEV;
+//export const MPOINT_DOMAIN      = IS_PRODUCTION_SERVER ? MPOINT_DOMAIN_PRO : MPOINT_DOMAIN_DEV;
