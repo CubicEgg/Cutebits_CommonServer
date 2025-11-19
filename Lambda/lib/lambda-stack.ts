@@ -13,6 +13,8 @@ export class LambdaStack extends cdk.Stack {
     super( scope, id, props );
 
     // ---- Lambda function "AccessInternet" ----
+    const funcAccessInternet = new NodejsFunction( this, 'AccessInternetFunction', {
+
       functionName: "AccessInternet",
       entry: path.join( __dirname, '../src/Entry.ts' ),
       handler: 'handler',
