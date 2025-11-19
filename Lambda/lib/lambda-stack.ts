@@ -15,7 +15,7 @@ interface LambdaBStackProps extends cdk.StackProps {
 
 
 export class LambdaStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: LambdaBStackProps) {
     super(scope, id, props);
 
     // ---- Lambda function "AccessInternet" ----

@@ -24,7 +24,7 @@ export class MPointResponse {
     public mPointCode : MPointCode;
 }
 
-class MPointUser {
+export class MPointUser {
     
     public balance: number;
     public phone: string;

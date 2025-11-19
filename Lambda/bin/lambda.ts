@@ -21,9 +21,9 @@ const app = new cdk.App();
 
 new LambdaStack( app, 'CommonServer', {
 
-  lambdaAExecutionRoleArns: lambdaAExecutionRoleArns
+  lambdaAExecutionRoleArns: lambdaAExecutionRoleArns,
   env: {
-    account: '151507815327',          // デプロイ先アカウント
-    region: 'ap-southeast-1',         // デプロイ先リージョン
+    account: '151507815327',
+    region: 'ap-southeast-1',
   }
 });
