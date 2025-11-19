@@ -42,6 +42,7 @@ export const handler = async function ( event: any ) {
                                                                               inputParam[ "phoneNumber" ],
                                                                               inputParam[ "mpoint_AppID" ],
                                                                               inputParam[ "mpoint_AppSecret" ],
+                                                                              inputParam[ "mpoint_PrivateKey" ],
                                                                               inputParam[ "mpoint_Domain" ] );
                     
                     retVal      = JSON.stringify( mPoint );

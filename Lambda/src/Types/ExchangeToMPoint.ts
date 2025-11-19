@@ -38,6 +38,7 @@ export async function ExchangeToMPoint( _id : string,
                                         _phoneNumber : string,
                                         _mpoint_AppID : string,
                                         _mpoint_AppSecret : string,
+                                        _mpoint_PrivateKey : string,
                                         _mpoint_Domain : string ) : Promise<MPointResponse> {
     
     var response : MPointResponse  = new MPointResponse();
@@ -55,9 +56,7 @@ export async function ExchangeToMPoint( _id : string,
     const dataJson  = JSON.stringify( dataToSign );
 
     // Signing with RSA-SHA256
-    const privateKey    = process.env.MPOINT_PRIVATE_KEY;
-
-    if ( !privateKey ) {
+    if ( !_mpoint_PrivateKey ) {
 
         console.error( "MPOINT_PRIVATE_KEY environment variable not set." );
         response.code       = 500;
@@ -70,7 +69,7 @@ export async function ExchangeToMPoint( _id : string,
     // We need to reformat it into a valid PEM string with newlines.
     const keyHeader     = "-----BEGIN RSA PRIVATE KEY-----";
     const keyFooter     = "-----END RSA PRIVATE KEY-----";
-    const keyBody       = privateKey.replace( keyHeader, "" ).replace( keyFooter, "" ).replace( /\s/g, "" );
+    const keyBody       = _mpoint_PrivateKey.replace( keyHeader, "" ).replace( keyFooter, "" ).replace( /\s/g, "" );
     const formattedPrivateKey   = `${keyHeader}\n${keyBody}\n${keyFooter}`;
 
     // Use the explicit algorithm from the documentation for clarity
