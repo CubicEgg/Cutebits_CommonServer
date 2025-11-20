@@ -1,0 +1,80 @@
+
+	■PHPMyAdmin
+	http://18.139.233.137/phpMyAdminKNdWHCp2sbur6WAq/
+	
+	ID：admin
+	PW：pcau89csFrARkeRV
+	
+	
+	
+	
+	
+	
+	==============================================================
+	//	Install Apache
+	$ sudo yum update -y
+	$ sudo yum install httpd						//	Install Apache
+	$ sudo systemctl start httpd.service			//	boot Apache service
+	$ sudo systemctl enable httpd.service			//	Set automatic booting
+	$ sudo systemctl is-enabled httpd.service		//	check
+	
+	//	Install mysql
+	$ sudo dnf -y localinstall https://dev.mysql.com/get/mysql80-community-release-el9-4.noarch.rpm
+	$ sudo dnf -y install mysql mysql-community-client
+	
+	//	connection check mysql
+	$ mysql -h grilledskewers-db-dev.c5oymoe46lfs.ap-southeast-1.rds.amazonaws.com -u admin -p
+	
+	//	Install PHP
+	$ sudo dnf install -y php php-mysqli php-fpm php-json php-devel php-gd
+	$ sudo yum install -y php php-mbstring
+	
+	//	Change timezone
+	$ sudo cp -p /usr/share/zoneinfo/Japan /etc/localtime
+	$ date										//	check
+	$ sudo vim /etc/sysconfig/clock
+		ZONE="Saigon"
+		UTC=false
+	
+	$ sudo reboot
+	
+	
+	//	Install PHPMYAdmin
+	$ cd /var/www/html
+	$ sudo wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
+	$ sudo mkdir phpMyAdminKNdWHCp2sbur6WAq
+	$ sudo tar -xvzf phpMyAdmin-latest-all-languages.tar.gz -C phpMyAdminKNdWHCp2sbur6WAq --strip-components 1
+	$ sudo rm phpMyAdmin-latest-all-languages.tar.gz
+	$ cd phpMyAdminKNdWHCp2sbur6WAq
+	$ sudo cp config.sample.inc.php config.inc.php
+	$ sudo vim config.inc.php
+	
+		/* Server parameters */
+		$cfg['Servers'][$i]['host'] = 'grilledskewers-db-dev.c5oymoe46lfs.ap-southeast-1.rds.amazonaws.com';
+		$cfg['blowfish_secret'] = '8fEZRGHKZ4wibYvi2Vb7ihjPQcAiaFDU';
+
+	//	Check access
+	http://18.139.233.137/phpMyAdminKNdWHCp2sbur6WAq/
+	
+	//	UIBakeryからの接続
+	//	UIBakery側の設定
+		
+		Host : grilledskewers-db-dev.c5oymoe46lfs.ap-southeast-1.rds.amazonaws.com
+		Port : 3306
+		Username : admin
+		Password : pcau89csFrARkeRV
+		Database : grilledskewers
+		Enable SSH tunnel -> check
+		Bastion host : 18.139.233.137
+		Bastion port : 22
+		
+	//	EC2側の設定
+	# sudo adduser uibakery --password NP
+	# sudo su
+	# mkdir -p /home/uibakery/.ssh
+	# touch /home/uibakery/.ssh/authorized_keys
+	//	Set required permissions and make uibakery user an owner of this file
+	# chmod 644 /home/uibakery/.ssh/authorized_keys
+	# chown uibakery:uibakery /home/uibakery/.ssh/authorized_keys
+	# vim /home/uibakery/.ssh/authorized_keys			//	UIBakeryのPublicKeyをコピペ
+	
