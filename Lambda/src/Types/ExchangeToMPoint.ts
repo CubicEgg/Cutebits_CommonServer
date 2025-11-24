@@ -44,6 +44,8 @@ export async function ExchangeToMPoint( _id : string,
     var response : MPointResponse  = new MPointResponse();
 
     const transactionId = `CE_${_id.toString().padStart(8, '0')}_${_amount}_${_strNowTime.replace(/[^0-9]/g, "")}`;
+    
+    _phoneNumber = _phoneNumber.replace(/\D/g, '');
 
     const dataToSign    = {
 
@@ -54,6 +56,8 @@ export async function ExchangeToMPoint( _id : string,
     };
 
     const dataJson  = JSON.stringify( dataToSign );
+
+    console.log( dataJson );
 
     // Signing with RSA-SHA256
     if ( !_mpoint_PrivateKey ) {
@@ -74,6 +78,7 @@ export async function ExchangeToMPoint( _id : string,
 
     // Use the explicit algorithm from the documentation for clarity
     const sign = createSign( 'RSA-SHA256' );
+
     sign.update( dataJson );
     sign.end();
     const signature     = sign.sign({ key: formattedPrivateKey, padding: constants.RSA_PKCS1_PADDING }, 'base64');
@@ -88,8 +93,10 @@ export async function ExchangeToMPoint( _id : string,
             amount: _amount
         }
     };
+    
+    const josonRequest  = JSON.stringify( requestBody );
 
-    console.log("Request body:", JSON.stringify(requestBody));
+    console.log("Request body:", josonRequest );
 
     const endpoint  = `${_mpoint_Domain}/api/v1/point-transaction/create-point-transaction`;
     const headers   = {
@@ -104,12 +111,13 @@ export async function ExchangeToMPoint( _id : string,
 
             method: 'POST',
             headers: headers,
-            body: JSON.stringify( requestBody )
+            body: josonRequest
         });
 
         console.log( "MPoint API response status:", fetchResponse.status );
 
-        const responseText = await fetchResponse.text();
+        const responseText  = await fetchResponse.text();
+
         console.log("MPoint API response text:", responseText);
 
         if ( fetchResponse.ok ) {

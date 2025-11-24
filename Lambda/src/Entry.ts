@@ -14,6 +14,8 @@ export const handler = async function ( event: any ) {
 
     if ( event.body == null ) {
 
+        console.log( "event.body == null" );
+
         return {
 
             statusCode: 200,
